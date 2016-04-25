@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            url = "https://repo.spongepowered.org/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+repositories {
+    maven {
+        url = "https://jitpack.io"
+    }
+}
+
+version = "1.0.0"
+group= "ru.redenergy" 
+archivesBaseName = "mc-party"
+
+
+minecraft {
+    version = "1.9-12.16.0.1845-1.9"
+    runDir = "eclipse"
+    mappings = "snapshot_20160312"
+}
+
+dependencies {
+    compile "com.github.FRedEnergy:rabbit-gui:1.9-SNAPSHOT"
+}
+
+compileJava {
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+}
+
+processResources{
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
