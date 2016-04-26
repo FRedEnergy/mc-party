@@ -39,6 +39,7 @@ minecraft {
 
 dependencies {
     compile "com.github.FRedEnergy:rabbit-gui:1.9-SNAPSHOT"
+    testCompile "junit:junit:4.11"
 }
 
 compileJava {
