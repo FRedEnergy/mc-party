@@ -14,10 +14,10 @@ public class PartyInfo {
     private int limit = INITIAL_PARTY_LIMIT;
 
     private UUID uid;
-    private String master;
-    private Set<String> members;
+    private UUID master;
+    private Set<UUID> members;
 
-    public PartyInfo(String master, Set<String> members) {
+    public PartyInfo(UUID master, Set<UUID> members) {
         if(members.size() + 1 > limit) //+1 because master also counted as member
             throw new IllegalArgumentException("Members amount cannot be more than limit: " + (members.size() + 1) + " > " + limit);
         this.master = master;
@@ -25,8 +25,8 @@ public class PartyInfo {
         this.uid = UUID.randomUUID();
     }
 
-    public PartyInfo(String master, String ... members){
-        this(master, new HashSet(Arrays.asList(members)));
+    public PartyInfo(UUID master, UUID ... members){
+        this(master, new HashSet<>(Arrays.asList(members)));
     }
 
     /**
@@ -34,23 +34,23 @@ public class PartyInfo {
      * @param member - member to add
      * @return <code>true</code> if member was successfully added and <code>false</code> if party already contained that member or limit reached
      */
-    public boolean addMember(String member) {
+    public boolean addMember(UUID member) {
         return members.size() + 2 <= limit && this.members.add(member);
     }
 
-    public String getMaster() {
+    public UUID getMaster() {
         return master;
     }
 
-    public Set<String> getMembers() {
+    public Set<UUID> getMembers() {
         return members;
     }
 
     /**
      * @return Returns master and all member of the party
      */
-    public Set<String> getAllPlayers(){
-        Set<String> players = new HashSet<String>(members);
+    public Set<UUID> getAllUsers(){
+        Set<UUID> players = new HashSet<UUID>(members);
         players.add(master);
         return players;
     }
